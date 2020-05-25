@@ -24,7 +24,7 @@ public class PlayerSaveAndLoad : MonoBehaviour
     {
 
         Debug.Log("New game");
-        playerStats.transform.position = new Vector3(10, 3, 10);
+        playerStats.transform.position = new Vector3(290, 3, 70);
 
     }
 

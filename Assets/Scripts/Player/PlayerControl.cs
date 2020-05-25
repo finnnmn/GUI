@@ -12,6 +12,7 @@ public enum MoveType
 public class PlayerControl : BaseStats
 {
 
+    #region variables
     [Header("Physics")]
     public CharacterController controller;
     public float gravity = 20f;
@@ -28,8 +29,10 @@ public class PlayerControl : BaseStats
 
     [Header("References")]
     public PlayerSaveAndLoad PlayerSaveAndLoad;
+    #endregion
 
     #region setup keys
+    //set default key values
     KeyCode forwardKey = KeyCode.W;
     KeyCode leftKey = KeyCode.A;
     KeyCode rightKey = KeyCode.D;
@@ -52,6 +55,7 @@ public class PlayerControl : BaseStats
     #region get key bindings
      public void getKeyBindings()
      {
+        //get keys from dictionary and assign keycodes
          forwardKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Forward", "W"));
          leftKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Left", "A"));
          rightKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Right", "D"));
@@ -63,8 +67,10 @@ public class PlayerControl : BaseStats
     }
     #endregion
 
+    
     void Update()
     {
+        #region movement
         if (controller.isGrounded)
         {
             #region get movement inputs
@@ -99,6 +105,7 @@ public class PlayerControl : BaseStats
 
         moveDirection.y -= gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
+        #endregion
 
         #region Crouch/Sprint
 
@@ -126,6 +133,14 @@ public class PlayerControl : BaseStats
             {
                 changeMoveType(MoveType.crouch);
             }
+        }
+
+        #endregion
+
+        #region fill status bars
+        for (int i = 0; i < characterStatus.Length; i++)
+        {
+            characterStatus[i].displayImage.fillAmount = Mathf.Clamp01(characterStatus[i].currentValue/characterStatus[i].maxValue);
         }
 
         #endregion
