@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum MoveType
 {
@@ -16,6 +17,7 @@ public class PlayerControl : BaseStats
     [Header("Physics")]
     public CharacterController controller;
     public float gravity = 20f;
+    public GameObject checkPoint;
 
     [Header("Movement Variables")]
     public float crouchSpeed = 2f;
@@ -29,6 +31,13 @@ public class PlayerControl : BaseStats
 
     [Header("References")]
     public PlayerSaveAndLoad PlayerSaveAndLoad;
+    public GameObject damageFlash;
+    public GameObject deathScreen;
+
+    [Header("Damage")]
+    public static bool isDead;
+    public bool canHeal;
+    public float healTimer;
     #endregion
 
     #region setup keys
@@ -47,6 +56,7 @@ public class PlayerControl : BaseStats
     {
         speed = walkSpeed;
         controller = this.gameObject.GetComponent<CharacterController>();
+        deathScreen.SetActive(false);
         getKeyBindings();
         PlayerSaveAndLoad.Load();
 
@@ -70,80 +80,104 @@ public class PlayerControl : BaseStats
     
     void Update()
     {
-        #region movement
-        if (controller.isGrounded)
+        if (!isDead)
         {
-            #region get movement inputs
-
-            float vMove = 0;
-            float hMove = 0;
-            if (Input.GetKey(forwardKey))
+            #region movement
+            if (controller.isGrounded)
             {
-                vMove += 1;
-            }
-            if (Input.GetKey(backwardKey))
-            {
-                vMove -= 1;
-            }
-            if (Input.GetKey(leftKey))
-            {
-                hMove -= 1;
-            }
-            if (Input.GetKey(rightKey))
-            {
-                hMove += 1;
-            }
-        #endregion
+                #region get movement inputs
 
-            moveDirection = transform.TransformDirection(new Vector3(hMove, 0, vMove));
-            moveDirection *= speed;
-            if (Input.GetKey(jumpKey))
-            {
-                moveDirection.y = jumpSpeed;
+                float vMove = 0;
+                float hMove = 0;
+                if (Input.GetKey(forwardKey))
+                {
+                    vMove += 1;
+                }
+                if (Input.GetKey(backwardKey))
+                {
+                    vMove -= 1;
+                }
+                if (Input.GetKey(leftKey))
+                {
+                    hMove -= 1;
+                }
+                if (Input.GetKey(rightKey))
+                {
+                    hMove += 1;
+                }
+                #endregion
+
+                moveDirection = transform.TransformDirection(new Vector3(hMove, 0, vMove));
+                moveDirection *= speed;
+                if (Input.GetKey(jumpKey))
+                {
+                    moveDirection.y = jumpSpeed;
+                }
             }
-        }
 
-        moveDirection.y -= gravity * Time.deltaTime;
-        controller.Move(moveDirection * Time.deltaTime);
-        #endregion
+            moveDirection.y -= gravity * Time.deltaTime;
+            controller.Move(moveDirection * Time.deltaTime);
+            #endregion
 
-        #region Crouch/Sprint
+            #region Crouch/Sprint
 
-        if (Input.GetKeyDown(sprintKey))
-        {
-            changeMoveType(MoveType.sprint);
-        }
-
-        if (Input.GetKeyDown(crouchKey))
-        {
-            changeMoveType(MoveType.crouch);
-        }
-
-        if (CurrentMoveType != MoveType.walk)
-        {
-            if (!(Input.GetKey(sprintKey) || Input.GetKey(crouchKey)))
-            {
-                changeMoveType(MoveType.walk);
-            }
-            else if ((CurrentMoveType == MoveType.crouch) && !(Input.GetKey(crouchKey)))
+            if (Input.GetKeyDown(sprintKey))
             {
                 changeMoveType(MoveType.sprint);
             }
-            else if ((CurrentMoveType == MoveType.sprint) && !(Input.GetKey(sprintKey)))
+
+            if (Input.GetKeyDown(crouchKey))
             {
                 changeMoveType(MoveType.crouch);
             }
+
+            if (CurrentMoveType != MoveType.walk)
+            {
+                if (!(Input.GetKey(sprintKey) || Input.GetKey(crouchKey)))
+                {
+                    changeMoveType(MoveType.walk);
+                }
+                else if ((CurrentMoveType == MoveType.crouch) && !(Input.GetKey(crouchKey)))
+                {
+                    changeMoveType(MoveType.sprint);
+                }
+                else if ((CurrentMoveType == MoveType.sprint) && !(Input.GetKey(sprintKey)))
+                {
+                    changeMoveType(MoveType.crouch);
+                }
+            }
+
+            #endregion
+
+            #region fill status bars
+            for (int i = 0; i < characterStatus.Length; i++)
+            {
+                characterStatus[i].displayImage.fillAmount = Mathf.Clamp01(characterStatus[i].currentValue / characterStatus[i].maxValue);
+            }
+
+            #endregion
+
+            #region heal timer
+            if (!canHeal)
+            {
+                healTimer += Time.deltaTime;
+                if (healTimer >= 5)
+                {
+                    canHeal = true;
+                }
+            }
+            #endregion
+
+            #region damage key
+#if UNITY_EDITOR
+            //for testing damage
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                DamagePlayer(10);
+            }
+#endif
+            #endregion
         }
-
-        #endregion
-
-        #region fill status bars
-        for (int i = 0; i < characterStatus.Length; i++)
-        {
-            characterStatus[i].displayImage.fillAmount = Mathf.Clamp01(characterStatus[i].currentValue/characterStatus[i].maxValue);
-        }
-
-        #endregion
 
     }
 
@@ -165,6 +199,83 @@ public class PlayerControl : BaseStats
             speed = crouchSpeed;
         }
     }
+
+    #region damage, death and healing
+    private void LateUpdate()
+    {
+        if (characterStatus[0].currentValue <= 0 && !isDead)
+        {
+            Death();
+        }
+        if (canHeal && characterStatus[0].currentValue < characterStatus[0].maxValue && characterStatus[0].currentValue > 0)
+        {
+            HealOverTime();
+        }
+    }
+
+    void Death()
+    {
+        isDead = true;
+        deathScreen.SetActive(true);
+        HideDamageFlash();
+        //allow mouse use
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void Respawn()
+    {
+        //hide mouse
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        //set values and move player
+        isDead = false;
+        characterStatus[0].currentValue = characterStatus[0].maxValue;
+        gameObject.SetActive(false);
+        transform.position = checkPoint.transform.position;
+        moveDirection = new Vector2(0, 0);
+        gameObject.SetActive(true);
+        deathScreen.SetActive(false);
+    }
+    
+        
+
+    public void QuitFromDeath()
+    {
+        
+        isDead = false;
+        characterStatus[0].currentValue = characterStatus[0].maxValue;
+        gameObject.SetActive(false);
+        transform.position = checkPoint.transform.position;
+        gameObject.SetActive(true);
+        PlayerSaveAndLoad.Save();
+        SceneManager.LoadScene(0);
+
+    }
+
+    public void DamagePlayer(float damage)
+    {
+        characterStatus[0].currentValue -= damage;
+
+        //Set flash
+        damageFlash.SetActive(true);
+        Invoke("HideDamageFlash", 0.2f);
+        //unable to heal
+        canHeal = false;
+        healTimer = 0;
+    }
+
+    void HealOverTime()
+    {
+        characterStatus[0].currentValue += Time.deltaTime * characterStatus[0].regenValue;
+    }
+
+    void HideDamageFlash()
+    {
+        damageFlash.SetActive(false);
+    }
+
+    #endregion
 }
 
 
