@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.IO;
 
 public class PlayerSaveAndLoad : MonoBehaviour
 {
@@ -8,24 +10,15 @@ public class PlayerSaveAndLoad : MonoBehaviour
 
     private void Start()
     {
-        if (!PlayerPrefs.HasKey("Loaded")) {
-            FirstLoad();
-            PlayerPrefs.SetInt("Loaded", 0);
-            Save();
-        }
-        else
+        if (File.Exists(Application.persistentDataPath + "/" + "save"))
         {
             Load();
         }
-    }
-
-
-    void FirstLoad()
-    {
-
-        Debug.Log("New game");
-        playerStats.transform.position = new Vector3(290, 3, 70);
-
+        else
+        {
+            Debug.LogError("Save file did not exist");
+            SceneManager.LoadScene(1);
+        }
     }
 
     public void Save()
@@ -35,11 +28,27 @@ public class PlayerSaveAndLoad : MonoBehaviour
 
     public void Load()
     {
-        PlayerData data = PlayerBinary.LoadPlayerData(playerStats);
-        playerStats.name = data.playerName;
+        PlayerData data = PlayerBinary.LoadPlayerData();
+        playerStats.playerName = data.playerName;
+        playerStats.gameObject.name = data.playerName;
+        playerStats.playerClass = data.playerClass;
         playerStats.level = data.level;
-       
+
+        for (int i = 0; i < playerStats.characterStatus.Length; i++)
+        {
+            playerStats.characterStatus[i].currentValue = data.lifeValue[i];
+        }
+
+        for (int i = 0; i < playerStats.characterStats.Length; i++)
+        {
+            playerStats.characterStats[i].value = data.characterStats[i];
+        }
+
         playerStats.transform.position = new Vector3(data.pX, data.pY, data.pZ);
+
+        playerStats.customIndex = data.customIndex;
+
+        playerStats.SetCustomisation();
     }
 
 }

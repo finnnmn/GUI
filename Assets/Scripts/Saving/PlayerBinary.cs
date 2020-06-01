@@ -4,6 +4,15 @@ using UnityEngine;
 
 public static class PlayerBinary
 {
+
+    public static void SaveNewData(PlayerData data)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/" + "save";
+        FileStream stream = new FileStream(path, FileMode.Create);
+        formatter.Serialize(stream, data);
+        stream.Close();
+    }
     public static void SavePlayerData(PlayerControl player)
     {
         //Reference a binary formatter
@@ -23,7 +32,7 @@ public static class PlayerBinary
 
         stream.Close();
     }
-    public static PlayerData LoadPlayerData(PlayerControl player)
+    public static PlayerData LoadPlayerData()
     {
         //Location to Load from
         string path = Application.persistentDataPath + "/" + "save";

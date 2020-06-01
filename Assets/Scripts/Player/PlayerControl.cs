@@ -30,6 +30,7 @@ public class PlayerControl : BaseStats
     MoveType CurrentMoveType = MoveType.walk;
 
     [Header("References")]
+    public Customisation customisation;
     public PlayerSaveAndLoad PlayerSaveAndLoad;
     public GameObject damageFlash;
     public GameObject deathScreen;
@@ -38,6 +39,7 @@ public class PlayerControl : BaseStats
     public static bool isDead;
     public bool canHeal;
     public float healTimer;
+
     #endregion
 
     #region setup keys
@@ -54,16 +56,18 @@ public class PlayerControl : BaseStats
 
     void Start()
     {
+        customisation = GetComponent<Customisation>();
+
         speed = walkSpeed;
         controller = this.gameObject.GetComponent<CharacterController>();
         deathScreen.SetActive(false);
-        getKeyBindings();
+        GetKeyBindings();
         PlayerSaveAndLoad.Load();
 
     }
 
     #region get key bindings
-     public void getKeyBindings()
+     public void GetKeyBindings()
      {
         //get keys from dictionary and assign keycodes
          forwardKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Forward", "W"));
@@ -123,27 +127,27 @@ public class PlayerControl : BaseStats
 
             if (Input.GetKeyDown(sprintKey))
             {
-                changeMoveType(MoveType.sprint);
+                ChangeMoveType(MoveType.sprint);
             }
 
             if (Input.GetKeyDown(crouchKey))
             {
-                changeMoveType(MoveType.crouch);
+                ChangeMoveType(MoveType.crouch);
             }
 
             if (CurrentMoveType != MoveType.walk)
             {
                 if (!(Input.GetKey(sprintKey) || Input.GetKey(crouchKey)))
                 {
-                    changeMoveType(MoveType.walk);
+                    ChangeMoveType(MoveType.walk);
                 }
                 else if ((CurrentMoveType == MoveType.crouch) && !(Input.GetKey(crouchKey)))
                 {
-                    changeMoveType(MoveType.sprint);
+                    ChangeMoveType(MoveType.sprint);
                 }
                 else if ((CurrentMoveType == MoveType.sprint) && !(Input.GetKey(sprintKey)))
                 {
-                    changeMoveType(MoveType.crouch);
+                    ChangeMoveType(MoveType.crouch);
                 }
             }
 
@@ -181,7 +185,7 @@ public class PlayerControl : BaseStats
 
     }
 
-    void changeMoveType(MoveType type)
+    void ChangeMoveType(MoveType type)
     {
         if (type == MoveType.walk)
         {
@@ -276,6 +280,16 @@ public class PlayerControl : BaseStats
     }
 
     #endregion
+
+    public void SetCustomisation()
+    {
+        customisation.SetTexture("Skin", customIndex[0]);
+        customisation.SetTexture("Hair", customIndex[1]);
+        customisation.SetTexture("Eyes", customIndex[2]);
+        customisation.SetTexture("Mouth", customIndex[3]);
+        customisation.SetTexture("Clothes", customIndex[4]);
+        customisation.SetTexture("Armour", customIndex[5]);
+    }
 }
 
 

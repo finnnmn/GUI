@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class KeybindManager : MonoBehaviour
 {
-    private Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>();
+    private readonly Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>();
     public GameObject currentKey;
     public Color32 defaultColour = new Color32(96, 245, 229, 255);
     public Color32 selected = new Color32(32, 250, 43, 255);
@@ -91,7 +91,7 @@ public class KeybindManager : MonoBehaviour
 
         if (player != null)
         {
-            player.GetComponent<PlayerControl>().getKeyBindings();
+            player.GetComponent<PlayerControl>().GetKeyBindings();
         }
     }
 

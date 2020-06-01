@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+
 
 public class MenuHandler : MonoBehaviour
 {
@@ -218,8 +220,7 @@ public class MenuHandler : MonoBehaviour
     public void SavePlayerPrefs()
     {
         //when closing options save everything to playerprefs
-        float value;
-        audioMixer.GetFloat("musicVolume", out value);
+        audioMixer.GetFloat("musicVolume", out float value);
         PlayerPrefs.SetFloat("musicVolume", value);
         audioMixer.GetFloat("soundVolume", out value);
         PlayerPrefs.SetFloat("soundVolume", value);
@@ -252,6 +253,19 @@ public class MenuHandler : MonoBehaviour
 
     public void NewGame()
     {
-        PlayerPrefs.DeleteKey("Loaded");
+        File.Delete(Application.persistentDataPath + "/" + "save");
+        StartGame();
+    }
+
+    public void StartGame()
+    {
+        if (File.Exists(Application.persistentDataPath + "/" + "save"))
+        {
+            GetComponent<LoadLevel>().LoadScene(2);
+        }
+        else 
+        {
+            GetComponent<LoadLevel>().LoadScene(1);
+        }
     }
 }
