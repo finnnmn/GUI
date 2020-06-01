@@ -31,6 +31,7 @@ public class PlayerControl : BaseStats
 
     [Header("References")]
     public Customisation customisation;
+    public Animator animator;
     public PlayerSaveAndLoad PlayerSaveAndLoad;
     public GameObject damageFlash;
     public GameObject deathScreen;
@@ -39,6 +40,9 @@ public class PlayerControl : BaseStats
     public static bool isDead;
     public bool canHeal;
     public float healTimer;
+
+    [Header("Menus")]
+    public string currentMenu;
 
     #endregion
 
@@ -113,6 +117,17 @@ public class PlayerControl : BaseStats
 
                 moveDirection = transform.TransformDirection(new Vector3(hMove, 0, vMove));
                 moveDirection *= speed;
+
+                //animation
+                if (animator.GetBool("Move") == false && (hMove != 0 || vMove != 0))
+                {
+                    animator.SetBool("Move", true);
+                }
+                else if (animator.GetBool("Move") == true && (hMove == 0 && vMove ==0))
+                {
+                    animator.SetBool("Move", false);
+                }
+
                 if (Input.GetKey(jumpKey))
                 {
                     moveDirection.y = jumpSpeed;

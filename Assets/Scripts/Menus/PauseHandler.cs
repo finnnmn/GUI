@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class PauseHandler : MonoBehaviour
 {
+    public PlayerControl player;
     public static bool paused;
     public GameObject pausePanel, optionsPanel;
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
         ResumeGame();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && (player.currentMenu == null || player.currentMenu == "Pause"))
         {
             if (paused)
             {
@@ -37,28 +39,37 @@ public class PauseHandler : MonoBehaviour
         }
     }
 
-    public void PauseGame()
+    public static void Pause()
     {
-        //set paused to true and open the menu
         paused = true;
-        pausePanel.SetActive(true);
-        //make the cursor visible and allow it to move
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        //set the timescale to 0 so the game pauses
         Time.timeScale = 0;
+    }
+
+    public static void Resume()
+    {
+        paused = false;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1;
+    }
+
+    public void PauseGame()
+    {
+        pausePanel.SetActive(true);
+        Pause();
+        player.currentMenu = "Pause";
     }
 
     public void ResumeGame()
     {
-        //set paused to false and hide the pause menu
-        paused = false;
+        
         pausePanel.SetActive(false);
         optionsPanel.SetActive(false);
-        //hide the cursor and lock it
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        //set the timescale to 1 so the game runs at normal speed
-        Time.timeScale = 1;
+        Resume();
+        player.currentMenu = null;
     }
+
+   
 }
