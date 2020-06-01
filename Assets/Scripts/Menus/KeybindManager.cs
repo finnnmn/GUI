@@ -15,7 +15,7 @@ public class KeybindManager : MonoBehaviour
     [Header("Text elements")]
 
     public Text forward;
-    public Text left, right, backward, jump, sprint, crouch;
+    public Text left, right, backward, jump, sprint, crouch, character;
 
     private void Start()
     {
@@ -27,6 +27,7 @@ public class KeybindManager : MonoBehaviour
         keys.Add("Jump", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Jump", "Space")));
         keys.Add("Sprint", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Sprint", "LeftShift")));
         keys.Add("Crouch", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Crouch", "LeftControl")));
+        keys.Add("Character", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Character", "C")));
 
         //set the text on the buttons to the keycodes
         forward.text = keys["Forward"].ToString();
@@ -36,6 +37,7 @@ public class KeybindManager : MonoBehaviour
         jump.text = keys["Jump"].ToString();
         sprint.text = keys["Sprint"].ToString();
         crouch.text = keys["Crouch"].ToString();
+        character.text = keys["Character"].ToString();
 
     }
 

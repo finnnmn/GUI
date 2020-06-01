@@ -20,7 +20,6 @@ public class CharacterMenu : MonoBehaviour
     public Text intelligenceText;
     public Text wisdomText;
     public Text charismaText;
-
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
@@ -29,7 +28,7 @@ public class CharacterMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C) && (player.currentMenu == null || player.currentMenu == "Character"))
+        if (Input.GetKeyDown(player.openKey) && (player.currentMenu == null || player.currentMenu == "Character"))
         {
             if (!PauseHandler.paused)
             {

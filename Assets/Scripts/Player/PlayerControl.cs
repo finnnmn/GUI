@@ -55,6 +55,7 @@ public class PlayerControl : BaseStats
     KeyCode jumpKey = KeyCode.Space;
     KeyCode sprintKey = KeyCode.LeftShift;
     KeyCode crouchKey = KeyCode.LeftControl;
+    public KeyCode openKey = KeyCode.C;
     #endregion
 
 
@@ -81,6 +82,7 @@ public class PlayerControl : BaseStats
          jumpKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Jump", "Space"));
          sprintKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Sprint", "LeftShift"));
          crouchKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Crouch", "LeftControl"));
+         openKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Character", "C"));
 
     }
     #endregion
