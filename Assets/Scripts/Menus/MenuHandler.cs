@@ -9,6 +9,7 @@ using UnityEngine.Audio;
 
 public class MenuHandler : MonoBehaviour
 {
+    public GameObject buttonSoundPrefab;
 
     #region options variables
     public AudioMixer audioMixer;
@@ -22,6 +23,7 @@ public class MenuHandler : MonoBehaviour
     public Toggle fullscreenToggle;
     #endregion
 
+    #region start
     private void Start()
     {
         //set the options to the playerprefs
@@ -100,25 +102,30 @@ public class MenuHandler : MonoBehaviour
         #endregion
 
         #region resolution
-        //set up the resolution dropdown
-        resolutions = Screen.resolutions;
-        resolutionDropdown.ClearOptions();
-        List<string> options = new List<string>();
-        int currentResolutionIndex = 0;
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            string option = resolutions[i].width + " x " + resolutions[i].height;
-            options.Add(option);
-            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+        if (resolutionDropdown != null) {
+            //set up the resolution dropdown
+            resolutions = Screen.resolutions;
+            resolutionDropdown.ClearOptions();
+            List<string> options = new List<string>();
+            int currentResolutionIndex = 0;
+            for (int i = 0; i < resolutions.Length; i++)
             {
-                currentResolutionIndex = i;
+                string option = resolutions[i].width + " x " + resolutions[i].height;
+                options.Add(option);
+                if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+                {
+                    currentResolutionIndex = i;
+                }
             }
-        }
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
+            resolutionDropdown.AddOptions(options);
+            resolutionDropdown.value = currentResolutionIndex;
+            resolutionDropdown.RefreshShownValue();
+    }
         #endregion
     }
+    #endregion
+
+    #region scene functions
     public void ChangeScene(int index)
     {
         Time.timeScale = 1;
@@ -131,7 +138,23 @@ public class MenuHandler : MonoBehaviour
 #endif
         Application.Quit();
     }
+    #endregion
 
+    #region button sound
+
+    public void ButtonSound()
+    {
+        if (!GameObject.Find("ButtonSound"))
+        {
+            GameObject buttonSound = Instantiate(buttonSoundPrefab);
+            buttonSound.name = "ButtonSound";
+        }
+        GameObject.Find("ButtonSound").GetComponent<AudioSource>().Play();
+    }
+
+    #endregion
+
+    #region options
     public void SetOptions()
     {
         //use playerprefs to set up the options in the menu as it is opened
@@ -250,7 +273,9 @@ public class MenuHandler : MonoBehaviour
 
 
     }
+    #endregion
 
+    #region start game
     public void NewGame()
     {
         File.Delete(Application.persistentDataPath + "/" + "save");
@@ -268,4 +293,5 @@ public class MenuHandler : MonoBehaviour
             GetComponent<LoadLevel>().LoadScene(1);
         }
     }
+    #endregion
 }

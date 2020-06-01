@@ -30,15 +30,14 @@ public class CharacterMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(player.openKey) && (player.currentMenu == null || player.currentMenu == "Character"))
         {
+            GameObject.FindGameObjectWithTag("MenuHandler").GetComponent<MenuHandler>().ButtonSound();
             if (!PauseHandler.paused)
             {
                 OpenMenu();
-                
             }
             else
             {
                 GetComponent<CharacterMenu>().CloseMenu();
-                
             }
         }
     }

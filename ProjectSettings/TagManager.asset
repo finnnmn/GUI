@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - CharacterMesh
+  - ButtonSound
+  - MenuHandler
   layers:
   - Default
   - TransparentFX

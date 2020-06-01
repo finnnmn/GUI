@@ -17,6 +17,7 @@ public class PauseHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && (player.currentMenu == null || player.currentMenu == "Pause"))
         {
+            GameObject.FindGameObjectWithTag("MenuHandler").GetComponent<MenuHandler>().ButtonSound();
             if (paused)
             {
                 if (optionsPanel.activeSelf)

@@ -27,6 +27,7 @@ public class PressAnyKey : MonoBehaviour
         if (!started) { 
             if (Input.anyKeyDown)
             {
+                GameObject.FindGameObjectWithTag("MenuHandler").GetComponent<MenuHandler>().ButtonSound();
                 menuPanel.SetActive(true);
                 pressAnyKeyPanel.SetActive(false);
                 menuMusic.Play();
