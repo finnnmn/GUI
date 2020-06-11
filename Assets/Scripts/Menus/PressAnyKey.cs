@@ -10,6 +10,10 @@ public class PressAnyKey : MonoBehaviour
     public static bool started;
     void Start()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 1;
+
         if (!started) {
             menuPanel.SetActive(false);
             pressAnyKeyPanel.SetActive(true);

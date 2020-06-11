@@ -17,7 +17,8 @@ public class PlayerSaveAndLoad : MonoBehaviour
         else
         {
             Debug.LogError("Save file did not exist");
-            SceneManager.LoadScene(1);
+           
+            SceneManager.LoadScene(0);
         }
     }
 

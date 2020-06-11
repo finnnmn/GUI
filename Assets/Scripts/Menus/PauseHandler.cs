@@ -15,28 +15,43 @@ public class PauseHandler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && (player.currentMenu == null || player.currentMenu == "Pause"))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GameObject.FindGameObjectWithTag("MenuHandler").GetComponent<MenuHandler>().ButtonSound();
-            if (paused)
+            if (player.currentMenu == null || player.currentMenu == "Pause")
             {
-                if (optionsPanel.activeSelf)
+                GameObject.FindGameObjectWithTag("MenuHandler").GetComponent<MenuHandler>().ButtonSound();
+                if (paused)
                 {
-                    optionsPanel.SetActive(false);
-                    pausePanel.SetActive(true);
-                    GetComponent<MenuHandler>().SavePlayerPrefs();
-                    GetComponent<KeybindManager>().SaveKeys();
+                    if (optionsPanel.activeSelf)
+                    {
+                        optionsPanel.SetActive(false);
+                        pausePanel.SetActive(true);
+                        GetComponent<MenuHandler>().SavePlayerPrefs();
+                        GetComponent<KeybindManager>().SaveKeys();
 
+                    }
+                    else
+                    {
+                        ResumeGame();
+                    }
                 }
                 else
                 {
-                    ResumeGame();
+                    PauseGame();
                 }
             }
-            else
+            else if (player.currentMenu == "Inventory")
             {
-                PauseGame();
+                if (DialogueControl.inShop)
+                {
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<DialogueControl>().CloseShop();
+                }
+                else
+                {
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>().CloseInventory();
+                }
             }
+            
         }
     }
 

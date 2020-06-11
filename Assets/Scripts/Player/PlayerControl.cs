@@ -55,6 +55,8 @@ public class PlayerControl : BaseStats
     KeyCode jumpKey = KeyCode.Space;
     KeyCode sprintKey = KeyCode.LeftShift;
     KeyCode crouchKey = KeyCode.LeftControl;
+    KeyCode interactKey = KeyCode.E;
+    public KeyCode inventoryKey = KeyCode.Tab;
     public KeyCode openKey = KeyCode.C;
     #endregion
 
@@ -75,14 +77,16 @@ public class PlayerControl : BaseStats
      public void GetKeyBindings()
      {
         //get keys from dictionary and assign keycodes
-         forwardKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Forward", "W"));
-         leftKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Left", "A"));
-         rightKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Right", "D"));
-         backwardKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Backward", "S"));
-         jumpKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Jump", "Space"));
-         sprintKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Sprint", "LeftShift"));
-         crouchKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Crouch", "LeftControl"));
-         openKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Character", "C"));
+        forwardKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Forward", "W"));
+        leftKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Left", "A"));
+        rightKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Right", "D"));
+        backwardKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Backward", "S"));
+        jumpKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Jump", "Space"));
+        sprintKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Sprint", "LeftShift"));
+        crouchKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Crouch", "LeftControl"));
+        interactKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Interact", "LeftControl"));
+        inventoryKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Inventory", "Tab"));
+        openKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Character", "C"));
 
     }
     #endregion
@@ -168,6 +172,35 @@ public class PlayerControl : BaseStats
                 }
             }
 
+            #endregion
+
+            #region interact
+            if (Input.GetKeyDown(interactKey) || Input.GetMouseButtonDown(1))
+            {
+                if (currentMenu == "Dialogue")
+                {
+                    if (GetComponent<DialogueControl>().choice == false)
+                    {
+                        GetComponent<DialogueControl>().AdvanceDialogue();
+                    }
+                }
+                else if (currentMenu == "Inventory")
+                {
+                    if (DialogueControl.inShop)
+                    {
+                        GetComponent<DialogueControl>().CloseShop();
+                    }
+                    else
+                    {
+                        GetComponent<Inventory>().CloseInventory();
+                    }
+                }
+                else
+                {
+                    GetComponent<Interact>().InteractKey();
+                }
+                
+            }
             #endregion
 
             #region fill status bars

@@ -15,10 +15,12 @@ public class KeybindManager : MonoBehaviour
     [Header("Text elements")]
 
     public Text forward;
-    public Text left, right, backward, jump, sprint, crouch, character;
+    public Text left, right, backward, jump, sprint, crouch, interact, inventory, character;
 
     private void Start()
     {
+        //When adding keys, add to the next 2 statements, the variables above, in playerControl and on options panels
+
         //add the keys to the dictionary with default values
         keys.Add("Forward", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Forward", "W")));
         keys.Add("Left", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Left", "A")));
@@ -27,6 +29,8 @@ public class KeybindManager : MonoBehaviour
         keys.Add("Jump", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Jump", "Space")));
         keys.Add("Sprint", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Sprint", "LeftShift")));
         keys.Add("Crouch", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Crouch", "LeftControl")));
+        keys.Add("Interact", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Interact", "E")));
+        keys.Add("Inventory", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Inventory", "Tab")));
         keys.Add("Character", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Character", "C")));
 
         //set the text on the buttons to the keycodes
@@ -37,6 +41,8 @@ public class KeybindManager : MonoBehaviour
         jump.text = keys["Jump"].ToString();
         sprint.text = keys["Sprint"].ToString();
         crouch.text = keys["Crouch"].ToString();
+        interact.text = keys["Interact"].ToString();
+        inventory.text = keys["Inventory"].ToString();
         character.text = keys["Character"].ToString();
 
     }

@@ -34,5 +34,8 @@ public class BaseStats : MonoBehaviour
 
     public int[] customIndex = new int[6];
 
+    public int attack;
+    public int defence;
+
     
 }

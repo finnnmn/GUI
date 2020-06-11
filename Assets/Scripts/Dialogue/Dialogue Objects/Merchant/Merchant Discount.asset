@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3213701f80dd924daeb428669ca4c8e, type: 3}
+  m_Name: Merchant Discount
+  m_EditorClassIdentifier: 
+  dialogue:
+  - name: Merchant
+    dialogue: Aww, that's no good! Here, 50% discount on all items, just for you!
+    response: 1
+    responses:
+      button1Text: Shop
+      button1Action: 2
+      button2Text: Leave
+      button2Action: 1
+      dialogue1: {fileID: 0}
+      dialogue2: {fileID: 11400000, guid: df89eb2e0ceb7424d8accc54a10511af, type: 2}
+    setData: 1
+    dataSet:
+      dataType: 1
+      dataIndex: 0
+      value: 0.6
+  - name: Merchant
+    dialogue: Hope your day gets better!
+    response: 0
+    responses:
+      button1Text: 
+      button1Action: 0
+      button2Text: 
+      button2Action: 0
+      dialogue1: {fileID: 0}
+      dialogue2: {fileID: 0}
+    setData: 0
+    dataSet:
+      dataType: 0
+      dataIndex: 0
+      value: 0

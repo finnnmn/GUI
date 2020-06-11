@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3213701f80dd924daeb428669ca4c8e, type: 3}
+  m_Name: Yungo First
+  m_EditorClassIdentifier: 
+  dialogue:
+  - name: Yungo
+    dialogue: Wow! I haven't seen you around here before!
+    response: 0
+    responses:
+      button1Text: 
+      button1Action: 0
+      button2Text: 
+      button2Action: 0
+      dialogue1: {fileID: 0}
+      dialogue2: {fileID: 0}
+    setData: 0
+    dataSet:
+      dataIndex: 0
+      value: 0
+  - name: Player
+    dialogue: Hello!
+    response: 0
+    responses:
+      button1Text: 
+      button1Action: 0
+      button2Text: 
+      button2Action: 0
+      dialogue1: {fileID: 0}
+      dialogue2: {fileID: 0}
+    setData: 0
+    dataSet:
+      dataIndex: 0
+      value: 0
+  - name: Yungo
+    dialogue: Hey, do you like carrots?
+    response: 1
+    responses:
+      button1Text: Yes
+      button1Action: 1
+      button2Text: No
+      button2Action: 0
+      dialogue1: {fileID: 11400000, guid: b18a422fbc7c3494c8f094b26df9ac65, type: 2}
+      dialogue2: {fileID: 0}
+    setData: 0
+    dataSet:
+      dataIndex: 0
+      value: 0
+  - name: Yungo
+    dialogue: Oh... bye then.
+    response: 1
+    responses:
+      button1Text: Bye
+      button1Action: 3
+      button2Text: I hate you
+      button2Action: 0
+      dialogue1: {fileID: 0}
+      dialogue2: {fileID: 0}
+    setData: 1
+    dataSet:
+      dataIndex: 0
+      value: 1
+  - name: Yungo
+    dialogue: You're so mean! I'm going to cry!
+    response: 0
+    responses:
+      button1Text: 
+      button1Action: 0
+      button2Text: 
+      button2Action: 0
+      dialogue1: {fileID: 0}
+      dialogue2: {fileID: 0}
+    setData: 1
+    dataSet:
+      dataIndex: 0
+      value: -1

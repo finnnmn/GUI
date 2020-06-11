@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3213701f80dd924daeb428669ca4c8e, type: 3}
+  m_Name: Merchant
+  m_EditorClassIdentifier: 
+  dialogue:
+  - name: Merchant
+    dialogue: Hey! How are you?
+    response: 1
+    responses:
+      button1Text: Good
+      button1Action: 0
+      button2Text: Bad
+      button2Action: 1
+      dialogue1: {fileID: 0}
+      dialogue2: {fileID: 11400000, guid: 8d425e2de85e3ff4198414b16ba50e94, type: 2}
+    setData: 0
+    dataSet:
+      dataType: 0
+      dataIndex: 0
+      value: 0
+  - name: Merchant
+    dialogue: Good to hear! Care to browse?
+    response: 1
+    responses:
+      button1Text: Shop
+      button1Action: 2
+      button2Text: Leave
+      button2Action: 3
+      dialogue1: {fileID: 0}
+      dialogue2: {fileID: 0}
+    setData: 1
+    dataSet:
+      dataType: 1
+      dataIndex: 0
+      value: 1.2
+  - name: Merchant
+    dialogue: Thanks! Have a good day!
+    response: 0
+    responses:
+      button1Text: Shop
+      button1Action: 2
+      button2Text: Leave
+      button2Action: 3
+      dialogue1: {fileID: 0}
+      dialogue2: {fileID: 0}
+    setData: 0
+    dataSet:
+      dataType: 0
+      dataIndex: 0
+      value: 0
