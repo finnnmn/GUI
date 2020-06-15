@@ -15,7 +15,7 @@ public class KeybindManager : MonoBehaviour
     [Header("Text elements")]
 
     public Text forward;
-    public Text left, right, backward, jump, sprint, crouch, interact, inventory, character;
+    public Text left, right, backward, jump, sprint, crouch, interact, inventory, questLog, character;
 
     private void Start()
     {
@@ -31,6 +31,7 @@ public class KeybindManager : MonoBehaviour
         keys.Add("Crouch", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Crouch", "LeftControl")));
         keys.Add("Interact", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Interact", "E")));
         keys.Add("Inventory", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Inventory", "Tab")));
+        keys.Add("QuestLog", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("QuestLog", "L")));
         keys.Add("Character", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Character", "C")));
 
         //set the text on the buttons to the keycodes
@@ -43,6 +44,7 @@ public class KeybindManager : MonoBehaviour
         crouch.text = keys["Crouch"].ToString();
         interact.text = keys["Interact"].ToString();
         inventory.text = keys["Inventory"].ToString();
+        questLog.text = keys["QuestLog"].ToString();
         character.text = keys["Character"].ToString();
 
     }

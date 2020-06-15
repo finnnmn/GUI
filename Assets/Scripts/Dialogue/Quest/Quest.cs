@@ -2,17 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Quest : MonoBehaviour
+[System.Serializable]
+public class Quest
 {
-    // Start is called before the first frame update
-    void Start()
+    public string name;
+    public string description;
+    public QuestState state;
+    public QuestGoal goal;
+    public QuestReward reward;
+
+    public void UpdateState()
     {
-        
+        if (state == QuestState.Available || state == QuestState.Complete)
+        {
+            return;
+        }
+
+        if (goal.CheckGoal())
+        {
+            state = QuestState.Complete;
+        }
+        else
+        {
+            state = QuestState.Active;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Complete()
     {
-        
+        goal.GiveItems();
+        reward.ClaimReward();
+        state = QuestState.Claimed;
     }
+}
+
+public enum QuestState
+{
+    Available,
+    Active,
+    Complete,
+    Claimed
 }

@@ -57,6 +57,7 @@ public class PlayerControl : BaseStats
     KeyCode crouchKey = KeyCode.LeftControl;
     KeyCode interactKey = KeyCode.E;
     public KeyCode inventoryKey = KeyCode.Tab;
+    KeyCode questLogKey = KeyCode.L;
     public KeyCode openKey = KeyCode.C;
     #endregion
 
@@ -86,6 +87,7 @@ public class PlayerControl : BaseStats
         crouchKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Crouch", "LeftControl"));
         interactKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Interact", "LeftControl"));
         inventoryKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Inventory", "Tab"));
+        questLogKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("QuestLog", "L"));
         openKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Character", "C"));
 
     }
@@ -200,6 +202,20 @@ public class PlayerControl : BaseStats
                     GetComponent<Interact>().InteractKey();
                 }
                 
+            }
+            #endregion
+
+            #region quest log
+            if (Input.GetKeyDown(questLogKey) && (currentMenu == null || currentMenu == "QuestLog"))
+            {
+                if (currentMenu == null)
+                {
+                    GetComponent<QuestHandler>().OpenQuestLog();
+                }
+                else
+                {
+                    GetComponent<QuestHandler>().CloseQuestLog();
+                }
             }
             #endregion
 

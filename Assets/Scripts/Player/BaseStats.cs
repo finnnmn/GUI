@@ -27,6 +27,8 @@ public class BaseStats : MonoBehaviour
     public string playerName;
     public string playerClass;
     public int level;
+    public int exp;
+    public int maxExp = 10;
 
     public LifeForceStatus[] characterStatus = new LifeForceStatus[3];
 
@@ -37,5 +39,32 @@ public class BaseStats : MonoBehaviour
     public int attack;
     public int defence;
 
+    public void GainExp(int amount)
+    {
+        exp += amount;
+        if (exp >= maxExp)
+        {
+            int remainingExp = maxExp - exp;
+            LevelUp();
+            GainExp(remainingExp);
+        }
+    }
+
+    public void LevelUp()
+    {
+        level += 1;
+        exp = 0;
+        maxExp += 5;
+
+        for(int i = 0; i < characterStats.Length; i++)
+        {
+            characterStats[i].value += 1;
+        }
+
+        for (int i = 0; i < characterStatus.Length; i++)
+        {
+            characterStatus[i].maxValue += 5;
+        }
+    }
     
 }
