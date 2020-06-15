@@ -26,12 +26,14 @@ public class DialogueControl : MonoBehaviour
     int index;
 
     PlayerControl player;
+    QuestHandler questHandler;
     #endregion
 
     #region start
     private void Start()
     {
         player = GetComponent<PlayerControl>();
+        questHandler = GetComponent<QuestHandler>();
         CloseDialogueBox();
     }
     #endregion
@@ -186,6 +188,11 @@ public class DialogueControl : MonoBehaviour
                         response1.onClick.AddListener(() => OpenShop());
                         break;
                     }
+                case ResponseType.quest:
+                    {
+                        response1.onClick.AddListener(() => OpenQuest());
+                        break;
+                    }
                 case ResponseType.close:
                     {
                         response1.onClick.AddListener(() => CloseDialogueBox());
@@ -219,6 +226,11 @@ public class DialogueControl : MonoBehaviour
                 case ResponseType.shop:
                     {
                         response2.onClick.AddListener(() => OpenShop());
+                        break;
+                    }
+                case ResponseType.quest:
+                    {
+                        response2.onClick.AddListener(() => OpenQuest());
                         break;
                     }
             }
@@ -290,6 +302,48 @@ public class DialogueControl : MonoBehaviour
         OpenDialogueBox();
         inShop = false;
         AdvanceDialogue();
+    }
+
+    #endregion
+
+    #region quest
+    public void OpenQuest()
+    {
+        if (currentNPC.quests.Length > 0)
+        {
+            Quest NPCQuest = currentNPC.GetQuest();
+            if (NPCQuest == null)
+            {
+                Debug.Log("GetQuest returned null");
+                AdvanceDialogue();
+            }
+            else
+            {
+                if (NPCQuest.state == QuestState.Available)
+                {
+                    CloseDialogueBox();
+                    questHandler.OpenAcceptPanel(NPCQuest);
+                }
+                else if (NPCQuest.state == QuestState.Complete)
+                {
+                    CloseDialogueBox();
+                    questHandler.OpenRewardPanel(NPCQuest);
+                }
+                else
+                {
+                    Debug.Log("Queststate was not available or complete");
+                    AdvanceDialogue();
+                }
+            }
+            
+        }
+        else
+        {
+            Debug.Log("No quest giver component found");
+            AdvanceDialogue();
+        }
+       
+        
     }
 
     #endregion

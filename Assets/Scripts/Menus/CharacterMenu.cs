@@ -61,7 +61,7 @@ public class CharacterMenu : MonoBehaviour
     void SetValues()
     {
         nameText.text = player.playerName;
-        infoText.text = "Level " + player.level + " " + player.playerClass;
+        infoText.text = "Level " + player.level + " " + player.playerClass + "\n" + "Exp " + player.exp + "/" + player.maxExp;
 
         healthText.text = "Health: " + Math.Floor(player.characterStatus[0].currentValue) + "/" + player.characterStatus[0].maxValue;
         manaText.text = "Mana: " + Math.Floor(player.characterStatus[1].currentValue) + "/" + player.characterStatus[1].maxValue;

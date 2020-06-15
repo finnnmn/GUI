@@ -51,6 +51,10 @@ public class PauseHandler : MonoBehaviour
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>().CloseInventory();
                 }
             }
+            else if (player.currentMenu == "QuestLog")
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<QuestHandler>().CloseQuestLog();
+            }
             
         }
     }

@@ -507,6 +507,7 @@ public class Inventory : MonoBehaviour
                             {
                                 button1.GetComponentInChildren<Text>().text = "Unequip";
                                 button1.onClick.AddListener(() => Unequip(item));
+                                button2.gameObject.SetActive(false);
                             }
                             break;
                         case ItemType.Potion:

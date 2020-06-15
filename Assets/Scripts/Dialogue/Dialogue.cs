@@ -2,21 +2,7 @@
 using UnityEditor;
 
 #region structs and enums
-[System.Serializable]
 
-public class DialogueText
-{
-    public string name;
-    [TextArea(3, 5)]
-    public string dialogue;
-    [Space(5)]
-    public bool response;
-    public Response responses;
-    [Space(5)]
-    public bool setData;
-    public DataSet dataSet;
-
-}
 
 [System.Serializable]
 public struct Response
@@ -38,7 +24,8 @@ public enum ResponseType
     advance,
     dialogue,
     shop,
-    close
+    close,
+    quest
 }
 [System.Serializable]
 public struct DataSet
@@ -64,6 +51,21 @@ public enum DataType
 public class Dialogue : ScriptableObject
 {
     public DialogueText[] dialogue = new DialogueText[1];
+
+}
+
+[System.Serializable]
+public class DialogueText
+{
+    public string name;
+    [TextArea(3, 5)]
+    public string dialogue;
+    [Space(5)]
+    public bool response;
+    public Response responses;
+    [Space(5)]
+    public bool setData;
+    public DataSet dataSet;
 
 }
 

@@ -6,6 +6,7 @@ using UnityEngine;
 public class Quest
 {
     public string name;
+    [TextArea(3, 5)]
     public string description;
     public QuestState state;
     public QuestGoal goal;
@@ -13,7 +14,7 @@ public class Quest
 
     public void UpdateState()
     {
-        if (state == QuestState.Available || state == QuestState.Complete)
+        if (state == QuestState.Available || state == QuestState.Claimed)
         {
             return;
         }
@@ -32,7 +33,6 @@ public class Quest
     {
         goal.GiveItems();
         reward.ClaimReward();
-        state = QuestState.Claimed;
     }
 }
 
