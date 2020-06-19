@@ -64,6 +64,7 @@ public class BaseStats : MonoBehaviour
         for (int i = 0; i < characterStatus.Length; i++)
         {
             characterStatus[i].maxValue += 5;
+            characterStatus[i].currentValue += 5;
         }
     }
     

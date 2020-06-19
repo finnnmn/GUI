@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
   - name: Yungo
-    dialogue: Hey friend! Hope you've been well!
+    dialogue: Hello friend! I hope you're having a good day!
     response: 0
     responses:
       button1Text: 
@@ -25,5 +25,6 @@ MonoBehaviour:
       dialogue2: {fileID: 0}
     setData: 0
     dataSet:
+      dataType: 0
       dataIndex: 0
       value: 0

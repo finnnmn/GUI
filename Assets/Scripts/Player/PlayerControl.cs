@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public enum MoveType
@@ -27,7 +28,7 @@ public class PlayerControl : BaseStats
     public float jumpSpeed = 8f;
     Vector3 moveDirection;
     float speed;
-    MoveType CurrentMoveType = MoveType.walk;
+    MoveType currentMoveType = MoveType.walk;
 
     [Header("References")]
     public Customisation customisation;
@@ -44,6 +45,10 @@ public class PlayerControl : BaseStats
     [Header("Menus")]
     public string currentMenu;
 
+    [Header("Audio")]
+    public AudioClip damageSound;
+    public AudioClip deathSound;
+
     #endregion
 
     #region setup keys
@@ -56,8 +61,10 @@ public class PlayerControl : BaseStats
     KeyCode sprintKey = KeyCode.LeftShift;
     KeyCode crouchKey = KeyCode.LeftControl;
     KeyCode interactKey = KeyCode.E;
+    [HideInInspector]
     public KeyCode inventoryKey = KeyCode.Tab;
     KeyCode questLogKey = KeyCode.L;
+    [HideInInspector]
     public KeyCode openKey = KeyCode.C;
     #endregion
 
@@ -143,6 +150,21 @@ public class PlayerControl : BaseStats
             }
 
             moveDirection.y -= gravity * Time.deltaTime;
+
+            //cannot sprint if no stamina
+            
+            if (currentMoveType == MoveType.sprint)
+            {
+                if (characterStatus[2].currentValue <= 0)
+                {
+                    characterStatus[2].currentValue = 0;
+                    speed = walkSpeed;
+                }
+                else
+                {
+                    characterStatus[2].currentValue -= 8 * Time.deltaTime;
+                }
+            }
             controller.Move(moveDirection * Time.deltaTime);
             #endregion
 
@@ -158,17 +180,17 @@ public class PlayerControl : BaseStats
                 ChangeMoveType(MoveType.crouch);
             }
 
-            if (CurrentMoveType != MoveType.walk)
+            if (currentMoveType != MoveType.walk)
             {
                 if (!(Input.GetKey(sprintKey) || Input.GetKey(crouchKey)))
                 {
                     ChangeMoveType(MoveType.walk);
                 }
-                else if ((CurrentMoveType == MoveType.crouch) && !(Input.GetKey(crouchKey)))
+                else if ((currentMoveType == MoveType.crouch) && !(Input.GetKey(crouchKey)))
                 {
                     ChangeMoveType(MoveType.sprint);
                 }
-                else if ((CurrentMoveType == MoveType.sprint) && !(Input.GetKey(sprintKey)))
+                else if ((currentMoveType == MoveType.sprint) && !(Input.GetKey(sprintKey)))
                 {
                     ChangeMoveType(MoveType.crouch);
                 }
@@ -250,25 +272,26 @@ public class PlayerControl : BaseStats
         }
 
     }
-
+    #region Crouch/Sprint functions
     void ChangeMoveType(MoveType type)
     {
         if (type == MoveType.walk)
         {
-            CurrentMoveType = MoveType.walk;
+            currentMoveType = MoveType.walk;
             speed = walkSpeed;
         }
         else if (type == MoveType.sprint)
         {
-            CurrentMoveType = MoveType.sprint;
+            currentMoveType = MoveType.sprint;
             speed = sprintSpeed;
         }
         else if (type == MoveType.crouch)
         {
-            CurrentMoveType = MoveType.crouch;
+            currentMoveType = MoveType.crouch;
             speed = crouchSpeed;
         }
     }
+    #endregion
 
     #region damage, death and healing
     private void LateUpdate()
@@ -277,9 +300,20 @@ public class PlayerControl : BaseStats
         {
             Death();
         }
+        //regen HP
         if (canHeal && characterStatus[0].currentValue < characterStatus[0].maxValue && characterStatus[0].currentValue > 0)
         {
-            HealOverTime();
+            characterStatus[0].currentValue += Time.deltaTime * characterStatus[0].regenValue;
+        }
+        //regen MP
+        if (characterStatus[1].currentValue < characterStatus[1].maxValue)
+        {
+            characterStatus[1].currentValue += Time.deltaTime * characterStatus[1].regenValue;
+        }
+        //regen stamina
+        if (characterStatus[2].currentValue < characterStatus[2].maxValue && currentMoveType != MoveType.sprint)
+        {
+            characterStatus[2].currentValue += Time.deltaTime * characterStatus[2].regenValue;
         }
     }
 
@@ -291,6 +325,8 @@ public class PlayerControl : BaseStats
         //allow mouse use
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        //play sound
+        GetComponent<AudioSource>().PlayOneShot(deathSound);
     }
 
     public void Respawn()
@@ -300,7 +336,10 @@ public class PlayerControl : BaseStats
         Cursor.visible = false;
         //set values and move player
         isDead = false;
-        characterStatus[0].currentValue = characterStatus[0].maxValue;
+        for (int i = 0; i < characterStatus.Length; i++)
+        {
+            characterStatus[i].currentValue = characterStatus[0].maxValue;
+        }
         gameObject.SetActive(false);
         transform.position = checkPoint.transform.position;
         moveDirection = new Vector2(0, 0);
@@ -333,11 +372,8 @@ public class PlayerControl : BaseStats
         //unable to heal
         canHeal = false;
         healTimer = 0;
-    }
-
-    void HealOverTime()
-    {
-        characterStatus[0].currentValue += Time.deltaTime * characterStatus[0].regenValue;
+        //play sound
+        GetComponent<AudioSource>().PlayOneShot(damageSound);
     }
 
     void HideDamageFlash()
@@ -347,6 +383,7 @@ public class PlayerControl : BaseStats
 
     #endregion
 
+    #region load customisation
     public void SetCustomisation()
     {
         customisation.SetTexture("Skin", customIndex[0]);
@@ -356,6 +393,17 @@ public class PlayerControl : BaseStats
         customisation.SetTexture("Clothes", customIndex[4]);
         customisation.SetTexture("Armour", customIndex[5]);
     }
+    #endregion
+
+    #region enemy
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            DamagePlayer(10);
+        }
+    }
+    #endregion
 }
 
 

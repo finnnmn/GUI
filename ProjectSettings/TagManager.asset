@@ -10,6 +10,7 @@ TagManager:
   - Item
   - Storage
   - NPC
+  - Enemy
   layers:
   - Default
   - TransparentFX

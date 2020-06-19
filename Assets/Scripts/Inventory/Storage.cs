@@ -18,6 +18,9 @@ public class Storage : MonoBehaviour
     [Header("Shop values")]
     public float buyMultiplier = 1.2f;
     public float sellMultiplier = 0.5f;
+    [Header("Minimap marker")]
+    public GameObject markerPrefab;
+    GameObject marker;
 
 
     Inventory inventoryScript;
@@ -38,7 +41,17 @@ public class Storage : MonoBehaviour
                 }
             }
         }
+
+        //minimap marker
+        if (storageType == StorageType.shop)
+        {
+            marker = Instantiate(markerPrefab, this.transform);
+            marker.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Icons/Bag") as Sprite;
+            marker.transform.rotation = Quaternion.Euler(90, 0, 0);
+        }
+        
     }
+
 
     #endregion
 

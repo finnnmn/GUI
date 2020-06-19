@@ -5,14 +5,14 @@ public static class ItemData
     public static Item CreateItem(int itemID, int number)
     {
         #region create values
-        string name = "";
-        string description = "";
-        int value = 0;
-        int amount = 0;
-        int stackSize = 1;
-        string icon = "";
-        string mesh = "";
-        ItemType type = ItemType.Food;
+        string name;
+        string description;
+        int value;
+        int amount;
+        int stackSize;
+        string icon;
+        string mesh;
+        ItemType type;
         EquipmentType equipType = EquipmentType.body;
         int power = 0;
         #endregion
@@ -25,7 +25,6 @@ public static class ItemData
                 name = "Apple";
                 description = "A tasty fruit. Heals 10 HP";
                 value = 5;
-                amount = 1;
                 icon = "Food/Apple";
                 mesh = "Food/Apple";
                 type = ItemType.Food;
@@ -35,7 +34,6 @@ public static class ItemData
                 name = "Meat";
                 description = "The meat of some animal. Heals 20 HP";
                 value = 10;
-                amount = 1;
                 icon = "Food/Meat";
                 mesh = "Food/Meat";
                 type = ItemType.Food;
@@ -48,7 +46,6 @@ public static class ItemData
                 name = "Axe";
                 description = "The only weapon that isn't a primitive shape";
                 value = 100;
-                amount = 1;
                 icon = "Weapon/Axe";
                 mesh = "Weapon/Axe";
                 type = ItemType.Weapon;
@@ -59,7 +56,6 @@ public static class ItemData
                 name = "Bow";
                 description = "Doesn't come with arrows";
                 value = 50;
-                amount = 1;
                 icon = "Weapon/Bow";
                 mesh = "Weapon/Bow";
                 type = ItemType.Weapon;
@@ -70,7 +66,6 @@ public static class ItemData
                 name = "Sword";
                 description = "A sword";
                 value = 60;
-                amount = 1;
                 icon = "Weapon/Sword";
                 mesh = "Weapon/Sword";
                 type = ItemType.Weapon;
@@ -84,7 +79,6 @@ public static class ItemData
                 name = "Armour";
                 description = "Protects you from stuff. DEF 15";
                 value = 50;
-                amount = 1;
                 icon = "Armour/Armour";
                 mesh = "Armour/Armour";
                 type = ItemType.Armour;
@@ -96,7 +90,6 @@ public static class ItemData
                 name = "Helmet";
                 description = "Armour for the head. DEF 10";
                 value = 30;
-                amount = 1;
                 icon = "Armour/Helmet";
                 mesh = "Armour/Helmet";
                 type = ItemType.Armour;
@@ -108,7 +101,6 @@ public static class ItemData
                 name = "Shield";
                 description = "A worn shield. DEF 10";
                 value = 25;
-                amount = 1;
                 icon = "Armour/Shield";
                 mesh = "Armour/Shield";
                 type = ItemType.Armour;
@@ -123,7 +115,6 @@ public static class ItemData
                 name = "HealthPotion";
                 description = "A red potion";
                 value = 15;
-                amount = 1;
                 icon = "Potion/HealthPotion";
                 mesh = "Potion/HealthPotion";
                 type = ItemType.Potion;
@@ -133,7 +124,6 @@ public static class ItemData
                 name = "ManaPotion";
                 description = "Actually just water";
                 value = 15;
-                amount = 1;
                 icon = "Potion/ManaPotion";
                 mesh = "Potion/ManaPotion";
                 type = ItemType.Potion;
@@ -146,7 +136,6 @@ public static class ItemData
                 name = "Ingot";
                 description = "An unknown metal";
                 value = 10;
-                amount = 1;
                 icon = "Craft/Ingot";
                 mesh = "Craft/Ingot";
                 type = ItemType.Craft;
@@ -158,7 +147,6 @@ public static class ItemData
                 name = "Gem";
                 description = "A rare and amazing gem";
                 value = 100;
-                amount = 1;
                 icon = "Quest/Gem";
                 mesh = "Quest/Gem";
                 type = ItemType.Quest;
@@ -170,7 +158,6 @@ public static class ItemData
                 name = "Coin";
                 description = "For buying things";
                 value = 1;
-                amount = 1;
                 icon = "Coins";
                 mesh = "Coins";
                 type = ItemType.Money;
@@ -182,7 +169,6 @@ public static class ItemData
                 name = "Mysterious Apple";
                 description = "Was this supposed to be something else? Very mysterious";
                 value = 5;
-                amount = 1;
                 icon = "Food/Apple";
                 mesh = "Food/Apple";
                 type = ItemType.Food;

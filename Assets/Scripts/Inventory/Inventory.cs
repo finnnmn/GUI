@@ -17,8 +17,8 @@ public class Inventory : MonoBehaviour
 
     public Storage currentStorage;
 
-    List<Button> itemButtons = new List<Button>();
-    List<Button> itemButtons2 = new List<Button>();
+    private readonly List<Button> itemButtons = new List<Button>();
+    private readonly List<Button> itemButtons2 = new List<Button>();
 
     Item selectedItem = null;
     Item selectedItem2 = null;
@@ -513,6 +513,12 @@ public class Inventory : MonoBehaviour
                         case ItemType.Potion:
                             button1.gameObject.SetActive(true);
                             button1.GetComponentInChildren<Text>().text = "Drink";
+                            button1.onClick.RemoveAllListeners();
+                            button1.onClick.AddListener(() => UseConsumable(item));
+                            if (player.characterStatus[0].currentValue == player.characterStatus[0].maxValue)
+                            {
+                                button1.interactable = false;
+                            }
                             break;
                         case ItemType.Craft:
                         case ItemType.Quest:
