@@ -5454,6 +5454,7 @@ MonoBehaviour:
       comparison: 0
       questIndex: 0
       questState: 0
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: 9a168c651a40a584783dc49a15ffca74, type: 2}
   - hasCondition: 1
     condition:
@@ -5463,6 +5464,7 @@ MonoBehaviour:
       comparison: 0
       questIndex: 0
       questState: 1
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: 781f19dc4277c6644a977a225e6a208f, type: 2}
   - hasCondition: 1
     condition:
@@ -5472,6 +5474,7 @@ MonoBehaviour:
       comparison: 0
       questIndex: 0
       questState: 2
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: 8eb6f55c40581c349bf402530684d52b, type: 2}
   - hasCondition: 1
     condition:
@@ -5481,6 +5484,7 @@ MonoBehaviour:
       comparison: 0
       questIndex: 1
       questState: 3
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: ff98862f167b1154b9282ebddc96dc59, type: 2}
   - hasCondition: 1
     condition:
@@ -5490,6 +5494,7 @@ MonoBehaviour:
       comparison: 0
       questIndex: 1
       questState: 2
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: 2b7066e9f86404e4f8e5d84d87ba9775, type: 2}
   - hasCondition: 1
     condition:
@@ -5499,6 +5504,7 @@ MonoBehaviour:
       comparison: 0
       questIndex: 1
       questState: 1
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: 780109dd9246a4b4b9e2e87c17141bb5, type: 2}
   - hasCondition: 1
     condition:
@@ -5508,6 +5514,7 @@ MonoBehaviour:
       comparison: 1
       questIndex: 0
       questState: 0
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: 704c8e99e61983c4889c809fd0f1722d, type: 2}
   - hasCondition: 0
     condition:
@@ -5517,6 +5524,7 @@ MonoBehaviour:
       comparison: 0
       questIndex: 0
       questState: 0
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: 0d458415afa464146a4ce39c020d55c9, type: 2}
   quests:
   - name: The Gem of Destiny
@@ -11889,6 +11897,7 @@ MonoBehaviour:
       comparison: 0
       questIndex: 0
       questState: 3
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: b80cfd9efb1f5604aa0de96b78da2250, type: 2}
   - hasCondition: 1
     condition:
@@ -11898,6 +11907,7 @@ MonoBehaviour:
       comparison: 0
       questIndex: 0
       questState: 2
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: 7ee49ed378909f44984d905a91f8a7b9, type: 2}
   - hasCondition: 1
     condition:
@@ -11907,7 +11917,18 @@ MonoBehaviour:
       comparison: 0
       questIndex: 0
       questState: 1
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: 5550d054b5562c64093333cb666a5843, type: 2}
+  - hasCondition: 1
+    condition:
+      conditionType: 2
+      dataElement: 0
+      symbol: 0
+      comparison: 0
+      questIndex: 0
+      questState: 0
+      minLevel: 2
+    dialogue: {fileID: 11400000, guid: 6a66a3e22d7dfad4d8f7cc8beee2e41f, type: 2}
   - hasCondition: 0
     condition:
       conditionType: 0
@@ -11916,7 +11937,8 @@ MonoBehaviour:
       comparison: 0
       questIndex: 0
       questState: 0
-    dialogue: {fileID: 11400000, guid: 6a66a3e22d7dfad4d8f7cc8beee2e41f, type: 2}
+      minLevel: 0
+    dialogue: {fileID: 11400000, guid: ae3e40f674a47184994e81af1ab007b1, type: 2}
   quests:
   - name: Ingots for Timmy
     description: I need 5 ingots! There's probably some in the boxes around town!
@@ -14128,6 +14150,7 @@ MonoBehaviour:
       comparison: 0
       questIndex: 0
       questState: 0
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: c453760f251f44b48a0401b2c33db056, type: 2}
   quests: []
 --- !u!136 &925538089
@@ -14642,6 +14665,7 @@ MonoBehaviour:
       comparison: 2
       questIndex: 0
       questState: 0
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: f4b80d5aaf4e6564e93436e630323135, type: 2}
   - hasCondition: 1
     condition:
@@ -14651,6 +14675,7 @@ MonoBehaviour:
       comparison: 1
       questIndex: 0
       questState: 0
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: 640f639a4920b0f48a765e74bf304e50, type: 2}
   - hasCondition: 1
     condition:
@@ -14660,6 +14685,7 @@ MonoBehaviour:
       comparison: -1
       questIndex: 0
       questState: 0
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: 945799fb01238ea47b3f2599d312a3a6, type: 2}
   - hasCondition: 0
     condition:
@@ -14669,6 +14695,7 @@ MonoBehaviour:
       comparison: 5
       questIndex: 0
       questState: 0
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: 80540d7e453c51248b9df12830f06af7, type: 2}
   quests: []
 --- !u!4 &966395539 stripped
@@ -23574,6 +23601,7 @@ MonoBehaviour:
       comparison: 0
       questIndex: 0
       questState: 0
+      minLevel: 0
     dialogue: {fileID: 11400000, guid: 8965d36242776ce44846d7e61b4f414a, type: 2}
   quests: []
 --- !u!136 &1684437673

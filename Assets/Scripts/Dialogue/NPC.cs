@@ -9,12 +9,12 @@ public class NPC : MonoBehaviour
 
 
 
-
     #region dialogue conditions
     public enum ConditionType
     {
         Data,
-        Quest
+        Quest,
+        Level
     }
 
     [System.Serializable]
@@ -30,6 +30,9 @@ public class NPC : MonoBehaviour
         [Header("Quest")]
         public int questIndex;
         public QuestState questState;
+
+        [Header("Level")]
+        public int minLevel;
 
         #region check condition
         public bool Check(NPC npcData)
@@ -81,8 +84,20 @@ public class NPC : MonoBehaviour
                     {
                         return true;
                     }
-                    break;
                     #endregion
+                    break;
+                
+
+                case ConditionType.Level:
+                    #region check player level
+                    PlayerControl player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
+                    if (player.level >= minLevel)
+                    {
+                        return true;
+                    }
+                    #endregion
+                    break;
+                    
 
             }
             
